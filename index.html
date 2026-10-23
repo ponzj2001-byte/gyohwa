@@ -8,7 +8,37 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="robots" content="noindex,nofollow,noarchive">
 <link rel="stylesheet" href="style.css">
+<style>
+#lock{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:#2F4A6D;padding:24px}
+body.locked #lock{display:flex}body.locked #app{display:none}
+#lock .box{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:340px;text-align:center;font-family:sans-serif}
+#lock h1{font-size:20px;margin:0 0 6px;color:#2F4A6D}#lock p{margin:0 0 14px;font-size:14px;color:#555}
+#lock input{width:100%;box-sizing:border-box;font-size:20px;padding:10px;text-align:center;border:2px solid #ccc;border-radius:10px;letter-spacing:4px}
+#lock button{margin-top:12px;width:100%;font-size:17px;padding:12px;border:0;border-radius:10px;background:#2F4A6D;color:#fff}
+#lock .err{color:#c0392b;font-size:14px;min-height:1.2em;margin-top:8px}
+</style>
+<script>
+/* 간단한 비밀번호 잠금: 지인에게만 비밀번호를 알려 줌. 한 번 열면 이 폰에서는 다시 묻지 않음 */
+(function(){var K="gyohwa-unlock",H="f8b4ffda2d1b142a4f29c591b957d7f98dbcc6a8d1d56765261deaefbdcf48e7";
+var ok=false;try{ok=localStorage.getItem(K)===H}catch(e){}
+if(ok||location.protocol==="file:")return;
+document.documentElement.className="locked";
+document.addEventListener("DOMContentLoaded",function(){
+ document.body.classList.add("locked");
+ var d=document.createElement("div");d.id="lock";
+ d.innerHTML='<div class="box"><h1>교화 길잡이</h1><p>비밀번호를 입력하세요</p><input id="pw" type="password" inputmode="numeric" autocomplete="off"><button id="pwb">열기</button><div class="err" id="pwe"></div></div>';
+ document.body.appendChild(d);
+ function go(){var v=document.getElementById("pw").value;
+  crypto.subtle.digest("SHA-256",new TextEncoder().encode("gyohwa-lock:"+v)).then(function(b){
+   var h=Array.from(new Uint8Array(b)).map(function(x){return("0"+x.toString(16)).slice(-2)}).join("");
+   if(h===H){try{localStorage.setItem(K,H)}catch(e){}document.body.classList.remove("locked");d.remove()}
+   else document.getElementById("pwe").textContent="비밀번호가 맞지 않음"})}
+ document.getElementById("pwb").onclick=go;
+ document.getElementById("pw").onkeydown=function(e){if(e.key==="Enter")go()};
+});})();
+</script>
 </head>
 <body>
 <div id="app">
@@ -100,6 +130,40 @@
   <div id="toast" class="toast"></div>
 </div>
 <script src="content.js"></script>
+<script src="data/ch03.js"></script>
+<script src="data/ch04.js"></script>
+<script src="data/ch05.js"></script>
+<script src="data/ch06.js"></script>
+<script src="data/ch07.js"></script>
+<script src="data/ch08.js"></script>
+<script src="data/ch09.js"></script>
+<script src="data/ch10.js"></script>
+<script src="data/ch11.js"></script>
+<script src="data/ch12.js"></script>
+<script src="data/ch13.js"></script>
+<script src="data/ch14.js"></script>
+<script src="data/ch15.js"></script>
+<script src="data/ch16.js"></script>
+<script src="data/ch17.js"></script>
+<script src="data/ch18.js"></script>
+<script src="data/ch19.js"></script>
+<script src="data/ch20.js"></script>
+<script src="data/ch21.js"></script>
+<script src="data/ch22.js"></script>
+<script src="data/ch23.js"></script>
+<script src="data/ch24.js"></script>
+<script src="data/ch25.js"></script>
+<script src="data/ch26.js"></script>
+<script src="data/ch27.js"></script>
+<script src="data/ch28.js"></script>
+<script src="data/ch29.js"></script>
+<script src="data/ch30.js"></script>
+<script src="data/ch31.js"></script>
+<script src="data/ch32.js"></script>
+<script src="data/ch33.js"></script>
+<script src="data/ch34.js"></script>
+<script src="data/jeongyeong.js"></script>
+<script src="data/glossary_book.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

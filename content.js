@@ -8,7 +8,8 @@ window.APP_DATA = {
     { id: 4, ko: "제Ⅳ부 천지공사", en: "Part IV. The Reordering Works of Heaven and Earth", color: "#8A3B7A" },
     { id: 5, ko: "제Ⅴ부 종통", en: "Part V. The Orthodox Lineage", color: "#6B7A1F" },
     { id: 6, ko: "제Ⅵ부 개벽과 후천선경", en: "Part VI. Gaebyeok and the Later World Paradise", color: "#A3263A" },
-    { id: 7, ko: "제Ⅶ부 수도와 생활", en: "Part VII. Cultivation and Daily Life", color: "#5B3FA0" }
+    { id: 7, ko: "제Ⅶ부 수도와 생활", en: "Part VII. Cultivation and Daily Life", color: "#5B3FA0" },
+    { id: 8, ko: "부록", en: "Appendices", color: "#5A5A5A" }
   ],
   toc: [
     [1, 1, "음과 양", "Yin and Yang"],
@@ -26,7 +27,7 @@ window.APP_DATA = {
     [3, 13, "천개탑에서 한반도로: 진표율사와 금산사", "To the Korean Peninsula: Jinpyo and Geumsansa"],
     [3, 14, "수운·김일부와 상제님 탄강", "Suun, Kim Il-bu and the Birth of Sangje-nim"],
     [4, 15, "세상 진단과 해원", "Diagnosis of the World and Haewon"],
-    [4, 16, "신명조화정부", "The Spirit Government of Harmony"],
+    [4, 16, "신명조화정부", "The Spirit Government of Transformation"],
     [4, 17, "세운공사: 오선위기와 씨름판", "Works on World Affairs"],
     [4, 18, "문명·생활 공사와 대속", "Works on Civilization and Atonement"],
     [4, 19, "도운공사", "Works on the Course of the Dao"],
@@ -44,7 +45,9 @@ window.APP_DATA = {
     [7, 31, "도심(성심): 구도 이야기", "Stories of Sincere Seeking"],
     [7, 32, "잘못된 언행 경계", "Guarding Against Wrong Words and Deeds"],
     [7, 33, "주문", "Incantations"],
-    [7, 34, "앞으로의 공부", "Further Study"]
+    [7, 34, "앞으로의 공부", "Further Study"],
+    [8, 35, "전경 원판", "Jeon-gyeong (Korean original)"],
+    [8, 36, "용어 사전", "Glossary"]
   ],
 
   /* ───────── 한국어 ───────── */
@@ -666,4 +669,12 @@ window.APP_DATA = {
       jijang: { w: "Jijang Bodhisattva", h: "地藏菩薩", d: "The bodhisattva who governs Myeongbu in Buddhism and leads the ten kings", s: "Incantations p16" }
     }
   }
+};
+
+/* 3장부터는 data/chNN.js 파일이 이 함수로 장을 더함 */
+window.addChapter = function (n, ko, en, glossKo, glossEn) {
+  const D = window.APP_DATA;
+  D.ko.chapters[n] = ko; D.en.chapters[n] = en || ko;
+  Object.assign(D.ko.glossary, glossKo || {});
+  Object.assign(D.en.glossary, glossEn || {});
 };

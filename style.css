@@ -108,6 +108,10 @@ table.tb td{padding:6px;border:1px solid var(--line);text-align:center}
 .quote .who{display:block;font-size:.8em;color:var(--gold);font-family:inherit}
 figure{margin:8px 0}figure img{width:100%;border-radius:10px;border:1px solid var(--line);background:#fff}
 figcaption{font-size:.78em;color:var(--sub);margin-top:4px;line-height:1.5}
+.tb td:first-child,.tb th:first-child{min-width:4.5em;word-break:keep-all}
+.tb td:nth-child(2){word-break:keep-all}
+.vs{margin:0 0 .7em;line-height:1.85;font-family:"Noto Serif KR","Batang",serif}
+.vs b{display:inline-block;min-width:1.8em;margin-right:.35em;padding:0 .35em;border-radius:6px;background:var(--gold);color:#fff;font-family:inherit;font-size:.8em;text-align:center}
 .note{background:var(--brown2);border:1px dashed var(--brown);border-radius:10px;padding:9px 12px;font-size:.9em}
 .note b{color:var(--brown);display:block;font-size:.9em}
 .map button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border-radius:10px;padding:7px 10px;margin:4px 0;color:#fff;font-size:.9em}

@@ -12,8 +12,8 @@
       noBm: "북마크한 쪽이 없음. 읽기 화면 위쪽 ☆을 누르면 저장됨", noRes: "찾는 내용이 없음", where: "나온 곳",
       bmAdd: "북마크에 저장함", bmDel: "북마크를 지움", kyoOn: "교화 모드: 글씨를 크게 보여 줌", kyoOff: "교화 모드를 끔",
       showA: "정답 보기", ask: "확인 질문", src: "출처", noVoice: "이 폰에 한국어 읽기 음성이 없음. 설정 > 텍스트 음성 변환에서 설치",
-      about: "샘플 버전: 1~2장만 들어 있음. 모든 내용은 폴더의 원자료에서 가져왔고, 쪽마다 출처를 표시함. 인터넷 없이도 작동함.",
-      pg: (a, b) => `${a} / ${b}쪽`, chN: (n) => `${n}장`, terms: "용어",
+      about: "1~34장과 부록 A(전경 원판)·부록 B(용어 사전)가 들어 있음. 모든 내용은 폴더의 원자료 11개에서 가져왔고, 쪽마다 출처를 표시함. 인터넷 없이도 작동함.",
+      pg: (a, b) => `${a} / ${b}쪽`, chN: (n) => (n === 35 ? "부록 A" : n === 36 ? "부록 B" : `${n}장`), terms: "용어",
       shareTitle: "앱 설치·보내기", shareBtn: "이 앱을 다른 분께 보내기 (카톡 등)", installHow: "내 폰에 앱으로 설치하는 방법", voiceHow: "읽어주기 음성이 안 나올 때",
       instT: "이 폰에 앱으로 설치하기", instP: "홈 화면에 아이콘이 생기고, 인터넷이 없어도 열림", instBtn: "지금 설치", instHow: "설치 방법 보기",
       shareMsg: "교화 길잡이 앱 주소입니다. 아래 주소를 눌러 열고, 화면 안내에 따라 ‘홈 화면에 추가’를 누르면 앱으로 설치됩니다.",
@@ -31,8 +31,8 @@
       noBm: "No bookmarks yet. Tap ☆ at the top of a page to save it", noRes: "No results", where: "Appears in",
       bmAdd: "Bookmarked", bmDel: "Bookmark removed", kyoOn: "Teaching mode: larger text", kyoOff: "Teaching mode off",
       showA: "Show answer", ask: "Check question", src: "Source", noVoice: "No English voice on this phone. Install one in Settings > Text-to-speech",
-      about: "Sample version: Chapters 1–2 only. All content comes from the source files, with the source on every page. Works offline. (English is a draft translation.)",
-      pg: (a, b) => `${a} / ${b}`, chN: (n) => `Ch. ${n}`, terms: "Terms",
+      about: "Chapters 1–34 with Appendix A (Jeon-gyeong, Korean original) and Appendix B (Glossary). All content comes from the 11 source files, with the source on every page. Works offline. (English is a draft translation.)",
+      pg: (a, b) => `${a} / ${b}`, chN: (n) => (n === 35 ? "Appendix A" : n === 36 ? "Appendix B" : `Ch. ${n}`), terms: "Terms",
       shareTitle: "Install · Share", shareBtn: "Send this app to someone (KakaoTalk etc.)", installHow: "How to install on my phone", voiceHow: "If read-aloud has no voice",
       instT: "Install as an app on this phone", instP: "Adds an icon to the home screen and opens without internet", instBtn: "Install now", instHow: "How to install",
       shareMsg: "Here is the Gyohwa Guide app. Open the link and tap ‘Add to Home screen’ to install it as an app.",
@@ -102,7 +102,7 @@
     const done = has && chapter(n).pages.every((pg) => S.seen[pg.id]);
     const st = !has ? T().soon : isCur ? T().pg(S.last.i + 1, chapter(n).pages.length) : done ? "✓ " + T().done : "";
     return `<button class="ch ${has ? "" : "lock"} ${isCur ? "cur" : ""}" data-open="${has ? n : ""}" ${extra || ""}>
-      <span class="no" style="background:${has ? p.color : "#aaa"}">${n}</span><span class="tt">${esc(tocTitle(n))}</span><span class="st">${st}</span></button>`;
+      <span class="no" style="background:${has ? p.color : "#aaa"}">${n === 35 ? "A" : n === 36 ? "B" : n}</span><span class="tt">${esc(tocTitle(n))}</span><span class="st">${st}</span></button>`;
   }
   function renderHome() {
     const r = $("#resume");
@@ -126,7 +126,7 @@
       h += `<div class="part" style="background:${p.color}">${esc(S.lang === "ko" ? p.ko : p.en)}</div>`;
       D.toc.filter((x) => x[0] === p.id).forEach((x) => {
         h += chRow(x[1]);
-        if (L().chapters[x[1]]) h += chapter(x[1]).pages.map((pg, i) => `<button class="sl" style="padding-left:18px;font-size:14px" data-open="${x[1]}" data-i="${i}">${esc(plain(pg.sec))}</button>`).join("");
+        if (L().chapters[x[1]]) h += chapter(x[1]).pages.map((pg, i) => pg.sub ? "" : `<button class="sl" style="padding-left:18px;font-size:14px" data-open="${x[1]}" data-i="${i}">${esc(plain(pg.sec))}</button>`).join("");
       });
     });
     $("#toc-list").innerHTML = h;
@@ -173,6 +173,7 @@
       case "img": return `<figure class="blk"><img src="${b.src}" alt="${esc(b.cap)}" loading="lazy"><figcaption>${rich(b.cap)}</figcaption></figure>`;
       case "note": return `<div class="note blk"><b>${rich(b.title)}</b>${rich(b.x)}</div>`;
       case "map": return `<div class="map blk">${b.rows.map((r) => `<button class="t${r[3]}" data-jump="${r[2]}"><span class="n">${esc(r[0])}</span>${esc(r[1])}</button>`).join("")}</div>`;
+      case "verse": return `<p class="vs">${b.n ? `<b>${esc(b.n)}</b>` : ""}${rich(b.x)}</p>`;
     }
     return "";
   }
@@ -194,6 +195,7 @@
       else if (b.t === "note") parts.push(plain(b.title + ". " + b.x));
       else if (b.t === "img") parts.push(plain(b.cap));
       else if (b.t === "map") b.rows.forEach((r) => parts.push(r[0] + ", " + r[1]));
+      else if (b.t === "verse") parts.push((b.n ? b.n + ". " : "") + plain(b.x));
       else if (b.x) parts.push(plain(b.x));
     });
     return parts.filter(Boolean);
