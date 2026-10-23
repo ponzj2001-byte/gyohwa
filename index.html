@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2F4A6D">
+<title>교화 길잡이</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- 홈 -->
+  <section id="v-home" class="view">
+    <header class="top">
+      <div><div class="brand" data-t="appName">교화 길잡이</div><div class="brand-sub" data-t="appSub"></div></div>
+      <div class="lang" role="group" aria-label="언어"><button data-lang="ko">한</button><button data-lang="en">EN</button></div>
+    </header>
+    <button class="searchbar" data-go="search"><span class="ico">⌕</span><span data-t="searchPh"></span></button>
+    <div id="resume" class="resume"></div>
+    <div id="install" class="install"></div>
+    <div class="label" data-t="order"></div>
+    <div id="home-list"></div>
+  </section>
+
+  <!-- 목차 -->
+  <section id="v-toc" class="view">
+    <header class="top"><div class="brand" data-t="toc"></div></header>
+    <div id="toc-list"></div>
+  </section>
+
+  <!-- 검색 -->
+  <section id="v-search" class="view">
+    <header class="top"><div class="brand" data-t="search"></div></header>
+    <input id="q" type="search" autocomplete="off">
+    <div id="results"></div>
+  </section>
+
+  <!-- 용어 -->
+  <section id="v-gloss" class="view">
+    <header class="top"><div class="brand" data-t="gloss"></div></header>
+    <input id="gq" type="search" autocomplete="off">
+    <div id="gloss-list"></div>
+  </section>
+
+  <!-- 북마크·설정 -->
+  <section id="v-more" class="view">
+    <header class="top"><div class="brand" data-t="more"></div></header>
+    <div class="label" data-t="shareTitle"></div>
+    <div class="set">
+      <button class="row wide" id="m-share"><span data-t="shareBtn"></span><span>›</span></button>
+      <button class="row wide" id="m-install"><span data-t="installHow"></span><span>›</span></button>
+      <button class="row wide" id="m-voice"><span data-t="voiceHow"></span><span>›</span></button>
+    </div>
+    <div class="label" data-t="bookmarks"></div>
+    <div id="bm-list"></div>
+    <div class="label" data-t="settings"></div>
+    <div class="set">
+      <div class="row"><span data-t="fontSize"></span><div class="seg" id="s-font"></div></div>
+      <div class="row"><span data-t="theme"></span><div class="seg" id="s-theme"></div></div>
+      <div class="row"><span data-t="rate"></span><div class="seg" id="s-rate"></div></div>
+      <div class="row"><span data-t="autoNext"></span><label class="sw"><input type="checkbox" id="s-auto"><i></i></label></div>
+    </div>
+    <p class="fine" data-t="about"></p>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button data-go="home"><span class="ico">⌂</span><span data-t="home"></span></button>
+    <button data-go="toc"><span class="ico">☰</span><span data-t="toc"></span></button>
+    <button data-go="search"><span class="ico">⌕</span><span data-t="search"></span></button>
+    <button data-go="gloss"><span class="ico">字</span><span data-t="gloss"></span></button>
+    <button data-go="more"><span class="ico">☆</span><span data-t="more"></span></button>
+  </nav>
+
+  <!-- 읽기 -->
+  <section id="v-read" class="view">
+    <header class="rtop">
+      <button class="ib" id="r-back" aria-label="뒤로">‹</button>
+      <button class="rtitle" id="r-title"></button>
+      <button class="ib" id="r-kyo" aria-label="교화 모드">◎</button>
+      <button class="ib" id="r-bm" aria-label="북마크">☆</button>
+    </header>
+    <div class="prog"><div id="r-bar"></div></div>
+    <div class="pn" id="r-pn"></div>
+    <div id="stage"><article id="page" class="page"></article></div>
+    <footer class="rbar">
+      <button id="r-list"><span class="ico">☰</span><span data-t="pages"></span></button>
+      <button id="r-prev"><span class="ico">‹</span><span data-t="prev"></span></button>
+      <button id="r-play" class="play" aria-label="읽어주기">▶</button>
+      <button id="r-next"><span class="ico">›</span><span data-t="next"></span></button>
+      <button id="r-font"><span class="ico">가</span><span data-t="font"></span></button>
+    </footer>
+  </section>
+
+  <div id="sheet-bg" class="sheet-bg"></div>
+  <div id="sheet" class="sheet"><div class="grab"></div><div id="sheet-body"></div></div>
+  <div id="toast" class="toast"></div>
+</div>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
